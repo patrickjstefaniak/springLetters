@@ -6,11 +6,11 @@
 //
 //
 
+#pragma once
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
-
-#pragma once
 
 class particle {
 public:
@@ -18,9 +18,9 @@ public:
     particle (vec2 p);
     
     void draw();
+    void update();
     
-    
-    vec2    pos;
+    vec2    pos, forceDir;
     bool    followMouse;
     
 };

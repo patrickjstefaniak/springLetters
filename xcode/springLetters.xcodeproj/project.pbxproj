@@ -19,6 +19,7 @@
 		36009904544249359ACFBFB8 /* springLettersApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AC34035EC284CF681A09BB9 /* springLettersApp.cpp */; };
 		4A9B5D711CEF835200905D5C /* particleConroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B5D701CEF835200905D5C /* particleConroller.cpp */; };
 		4A9B5D751CEF837500905D5C /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B5D741CEF837500905D5C /* particle.cpp */; };
+		4A9B5D771CEFA0DE00905D5C /* spring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B5D761CEFA0DE00905D5C /* spring.cpp */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		7D8F96B4248243A1B6FE6ADA /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = FC906216C810418997118903 /* CinderApp.icns */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -43,6 +44,8 @@
 		4A9B5D721CEF835E00905D5C /* particleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = particleController.h; path = ../src/particleController.h; sourceTree = "<group>"; };
 		4A9B5D731CEF836800905D5C /* particle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = particle.h; path = ../src/particle.h; sourceTree = "<group>"; };
 		4A9B5D741CEF837500905D5C /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = particle.cpp; path = ../src/particle.cpp; sourceTree = "<group>"; };
+		4A9B5D761CEFA0DE00905D5C /* spring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = spring.cpp; path = ../src/spring.cpp; sourceTree = "<group>"; };
+		4A9B5D781CEFA0EA00905D5C /* spring.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = spring.h; path = ../src/spring.h; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		6AC34035EC284CF681A09BB9 /* springLettersApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = springLettersApp.cpp; path = ../src/springLettersApp.cpp; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* springLetters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = springLetters.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +90,8 @@
 				4A9B5D721CEF835E00905D5C /* particleController.h */,
 				4A9B5D731CEF836800905D5C /* particle.h */,
 				4A9B5D741CEF837500905D5C /* particle.cpp */,
+				4A9B5D761CEFA0DE00905D5C /* spring.cpp */,
+				4A9B5D781CEFA0EA00905D5C /* spring.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 			files = (
 				4A9B5D711CEF835200905D5C /* particleConroller.cpp in Sources */,
 				36009904544249359ACFBFB8 /* springLettersApp.cpp in Sources */,
+				4A9B5D771CEFA0DE00905D5C /* spring.cpp in Sources */,
 				4A9B5D751CEF837500905D5C /* particle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

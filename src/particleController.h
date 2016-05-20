@@ -7,6 +7,7 @@
 //
 
 #include "particle.h"
+#include "spring.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -16,9 +17,8 @@ using namespace std;
 
 class particleController {
 public:
-    particleController () {}
+    particleController ();
     
-    void initialize();
     void update();
     void draw();
     void mouseClick(vec2 mPos);
@@ -26,4 +26,5 @@ public:
     
     list<particle>  mParticles;
     vec2            mousePos;
+    vector<spring>  mSprings;
 };

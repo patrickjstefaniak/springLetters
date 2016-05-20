@@ -22,7 +22,7 @@ class springLettersApp : public App {
 void springLettersApp::setup()
 {
     setWindowSize(800, 600);
-    pc.initialize();
+    cout<< " in setup after init " << pc.mSprings.front().p1->pos << "   ";
 }
 
 void springLettersApp::mouseDown( MouseEvent event )
