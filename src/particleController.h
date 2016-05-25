@@ -32,5 +32,6 @@ public:
     PolyLine2f                  mLine;
     bool                        isClicked;
     list<particle>::iterator    curClicked;
-                        
+    vector<vec2>                points;
+    Path2d                      path;
 };

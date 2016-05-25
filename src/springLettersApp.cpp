@@ -22,8 +22,9 @@ class springLettersApp : public App {
 void springLettersApp::setup()
 {
     setWindowSize(800, 600);
-    Font arial( "Times", 512 );
-    Shape2d sha = arial.getGlyphShape( arial.getGlyphChar( 'Q' ) );
+    Font arial( "Bodoni 72", 400 );
+    
+    Shape2d sha = arial.getGlyphShape('Q');
     pc = particleController(sha);
 }
 
@@ -50,6 +51,7 @@ void springLettersApp::update()
 void springLettersApp::draw()
 {
 	gl::clear( Color( .4, .4, .4 ) );
+    
     pc.draw();
 }
 

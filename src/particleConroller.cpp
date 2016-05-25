@@ -27,20 +27,24 @@ particleController::particleController(){
         }
         ++i;
     }
-    //here particles in spring are still pointing to the particles in the particle controller
-    //cout << " in initialize " << mSprings.front().p1->pos << "   ";
+
 }
 
 
 particleController::particleController(Shape2d shape){
     isClicked = false;
     mShape = shape;
-    mLine = calcConvexHull(mShape);
-    for(auto pt = mLine.begin(); pt != mLine.end(); ++pt){
-        vec2 adjusted = *pt + vec2(getWindowWidth()/2, getWindowHeight()/2);
+    vector<Path2d> paths = mShape.getContours();
+    path = paths.front();
+    points = paths.front().getPoints();
+    
+    for(vector<vec2>::iterator pt = points.begin(); pt != points.end(); ++pt){
+        vec2 adjusted = *pt + vec2(getWindowWidth() * 2/3, getWindowHeight()*2/3);
         particle p = particle(adjusted);
         mParticles.push_back(p);
+        //cout << " blah ";
     }
+    
     curClicked = mParticles.begin();
     for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
         list<particle>::iterator j = i;
@@ -55,15 +59,44 @@ particleController::particleController(Shape2d shape){
 
 
 void particleController::draw(){
-    for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
-        list<particle>::iterator j = i;
-        for(++j; j != mParticles.end(); ++j){
-            //draw lines between each particle
-            gl::drawVector(vec3(i->pos.x, i->pos.y, 0), vec3(j->pos.x, j->pos.y, 0));
+    //for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
+        //draw lines between each particle
+        //list<particle>::iterator j = i++;
+        //gl::drawVector(vec3(i->pos.x, i->pos.y, 0), vec3(j->pos.x, j->pos.y, 0));
+        //
+        
+        
+        //why does this line make it move in a positive direction ????????????
+        //cout << "     Line: " << i->pos << j->pos;
+        
+        
+        //i->draw();
+        //++i;
+    //}
+    //gl::pushMatrices();
+    //gl::translate(vec2(getWindowWidth()/ 2, getWindowHeight() * 2 / 3));
+    //Path2d path = mShape.getContour(10);
+
+    //gl::draw(path);
+    //gl::popMatrices();
+    //gl::draw(mLine);
+    gl::pushMatrices();
+    gl::translate(vec2(getWindowWidth()/ 2, getWindowHeight() * 2 / 3));
+    //gl::draw(path);
+    gl::popMatrices();
+    
+    Path2d drawin;
+    drawin.moveTo(mParticles.front().pos);
+    
+    for(particle &p: mParticles){
+        //p.draw();
+        if(p.pos != mParticles.front().pos){
+            drawin.lineTo(p.pos);
+        }else if(p.pos == mParticles.back().pos){
+            drawin.close();
         }
-        i->draw();
-        ++i;
     }
+    gl::drawSolid(drawin);
 }
 
 
@@ -77,7 +110,7 @@ void particleController::mouseClick(vec2 m){
     //if inside shape, find nearest point particle to mouse to mark as 'clicked'
     if(!isClicked){
         PolyLine2f cur;
-        for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end(); ++i){
+       for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end(); ++i){
             cur.push_back(i->pos);
         }
         if(cur.contains(m)){
@@ -92,6 +125,7 @@ void particleController::mouseClick(vec2 m){
             closest->followMouse = true;
             curClicked = closest;
             isClicked = true;
+            mLine = cur;
         }else{
             cout << " out " << mLine.getPosition(1);
         }
@@ -114,7 +148,7 @@ void particleController::update(){
     for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end(); ++i){
         if(i->followMouse){
             i->pos = mousePos;
-                    }
+        }
         list<particle>::iterator j = i;
         for(++j; j != mParticles.end(); ++j){
             vec2 force = s->calculate(i->pos, j->pos);
