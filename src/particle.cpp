@@ -16,7 +16,7 @@ particle::particle(vec2 p){
 
 void particle::draw(){
     gl::color(.9,.5,.5);
-    gl::drawSolidCircle(pos, 20);
+    gl::drawSolidCircle(pos, 5);
 }
 
 void particle::update(){

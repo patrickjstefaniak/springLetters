@@ -23,7 +23,7 @@ void springLettersApp::setup()
 {
     setWindowSize(800, 600);
     Font arial( "Times", 512 );
-    Shape2d sha = arial.getGlyphShape( arial.getGlyphChar( 'x' ) );
+    Shape2d sha = arial.getGlyphShape( arial.getGlyphChar( 'Q' ) );
     pc = particleController(sha);
 }
 
