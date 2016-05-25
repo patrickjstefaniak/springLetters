@@ -10,7 +10,7 @@
 
 spring::spring(particle i, particle j){
     rest = distance(i.pos, j.pos);
-    k = 0.02f;
+    k = 0.5f;
     //cout << " in spring constructer " << p1->pos << "   " ;
 }
 

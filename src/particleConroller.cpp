@@ -48,11 +48,11 @@ particleController::particleController(Shape2d shape){
     curClicked = mParticles.begin();
     for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
         list<particle>::iterator j = i;
-        for(++j; j != mParticles.end(); ++j){
+        ++j;
             //create springs between each particle
             spring s = spring(*i, *j);
             mSprings.push_back(s);
-        }
+        
         ++i;
     }
 }
@@ -150,12 +150,12 @@ void particleController::update(){
             i->pos = mousePos;
         }
         list<particle>::iterator j = i;
-        for(++j; j != mParticles.end(); ++j){
+        ++j;
             vec2 force = s->calculate(i->pos, j->pos);
             i->forceDir += force;
             j->forceDir += -force;
             ++s;
-        }
+        
         i->update();
     }
 }
