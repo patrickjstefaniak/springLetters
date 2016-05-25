@@ -11,15 +11,13 @@
 spring::spring(particle i, particle j){
     rest = distance(i.pos, j.pos);
     k = 0.1f;
-    p1 = &i;
-    p2 = &j;
-    cout << " in spring constructer " << p1->pos << "   " ;
+    //cout << " in spring constructer " << p1->pos << "   " ;
 }
 
-void spring::calculate(){
-    /*
+vec2 spring::calculate(vec2 i, vec2 j){
+    
     //find direction and distance, compare to rest length
-    vec2 curParts = a->pos - b->pos ;
+    vec2 curParts = i - j ;
     float curDis = length(curParts);
     float displace = curDis - rest;
     //normalize direction, calculate force
@@ -28,10 +26,8 @@ void spring::calculate(){
     }
     float f = -1 * k * displace;
     //apply forces to particles
-    a->forceDir += curParts * f;
-    b->forceDir -= curParts * f;
-    */
-    cout << " calculate " << p1->pos << "    " ;
-    p1->forceDir += vec2(1,0);
-    p2->forceDir -= vec2(1,3);
+    return curParts * f;
+    
+    //cout << " calculate " << p1->pos << "    " ;
+    
 }

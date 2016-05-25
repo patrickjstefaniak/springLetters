@@ -19,8 +19,7 @@ public:
     spring () {}
     spring (particle a, particle b);
     
-    void calculate();
+    vec2 calculate(vec2 i, vec2 j);
     
     float rest, k;
-    particle *p1, *p2;
 };

@@ -22,6 +22,6 @@ void particle::draw(){
 void particle::update(){
     //calculate new pos based on velocity and spring force and reset force
     pos += forceDir;
-    cout << forceDir << "   ";
+    //cout << forceDir << "   ";
     forceDir = vec2(0);
 }
