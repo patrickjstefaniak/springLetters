@@ -22,6 +22,7 @@ particleController::particleController(){
         }
         ++i;
     }
+    //here particles in spring are still pointing to the particles in the particle controller
     cout << " in initialize " << mSprings.front().p1->pos << "   ";
 }
 

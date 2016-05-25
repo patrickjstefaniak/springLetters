@@ -22,6 +22,11 @@ class springLettersApp : public App {
 void springLettersApp::setup()
 {
     setWindowSize(800, 600);
+    pc = particleController();
+    //
+    //why does the p1.pos change so drastically between constructor and here?
+    //something to do with the pointer?
+    //
     cout<< " in setup after init " << pc.mSprings.front().p1->pos << "   ";
 }
 
