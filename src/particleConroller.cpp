@@ -52,7 +52,6 @@ particleController::particleController(Shape2d shape){
         vec2 adjusted = *pt + vec2(getWindowWidth() * 2/3, getWindowHeight()*2/3);
         particle p = particle(adjusted);
         mParticles.push_back(p);
-        //cout << " blah ";
     }
     
     curClicked = mParticles.begin();
@@ -70,53 +69,11 @@ particleController::particleController(Shape2d shape){
 
 
 void particleController::draw(){
-    //for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
-        //draw lines between each particle
-        //list<particle>::iterator j = i++;
-        //gl::drawVector(vec3(i->pos.x, i->pos.y, 0), vec3(j->pos.x, j->pos.y, 0));
-        //
-        
-        
-        //why does this line make it move in a positive direction ????????????
-        //cout << "     Line: " << i->pos << j->pos;
-        
-        
-        //i->draw();
-        //++i;
-    //}
-    //gl::pushMatrices();
-    //gl::translate(vec2(getWindowWidth()/ 2, getWindowHeight() * 2 / 3));
-    //Path2d path = mShape.getContour(10);
-
-    //gl::draw(path);
-    //gl::popMatrices();
-    //gl::draw(mLine);
-    gl::pushMatrices();
-    gl::translate(vec2(getWindowWidth()/ 2, getWindowHeight() * 2 / 3));
-    //gl::draw(path);
-    gl::popMatrices();
-    
-    Path2d drawin;
-    drawin.moveTo(mParticles.front().pos);
-    
-    for(particle &p: mParticles){
-        //p.draw();
-        if(p.pos != mParticles.front().pos){
-            drawin.lineTo(p.pos);
-        }else if(p.pos == mParticles.back().pos){
-            drawin.close();
-        }
-    }
-    gl::drawSolid(drawin);
+    gl::draw(path);
 }
 
 
 void particleController::mouseClick(vec2 m){
-    /*for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end(); ++i){
-        if(distance(m, i->pos) < 20){
-            i->followMouse = ! i->followMouse;
-        }
-    }*/
     
     //if inside shape, find nearest point particle to mouse to mark as 'clicked'
     if(!isClicked){
@@ -169,6 +126,14 @@ void particleController::update(){
         }
         i->update();
     }
+    
+    //update original glyph shape to the particle points
+    int i = 0;
+    for(particle &p: mParticles){
+        path.setPoint(i, p.pos);
+        i++;
+    }
+    
 }
 
 

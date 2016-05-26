@@ -25,7 +25,7 @@ public:
     void mouseClick(vec2 mPos);
     void mouseDrag(vec2 mPos);
     
-    
+    vector<list<particle>>      mPartShapes;
     list<particle>              mParticles;
     vec2                        mousePos;
     list<spring>                mSprings;
