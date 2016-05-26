@@ -38,6 +38,16 @@ particleController::particleController(Shape2d shape){
     path = paths.front();
     points = paths.front().getPoints();
     
+    //adjust spring constant based on number of points
+    float springConst = points.size();
+    if (springConst < 7){
+        springConst = .06;
+    }else if(springConst > 20){
+        springConst = .005;
+    }else{
+        springConst = .02;
+    }
+    
     for(vector<vec2>::iterator pt = points.begin(); pt != points.end(); ++pt){
         vec2 adjusted = *pt + vec2(getWindowWidth() * 2/3, getWindowHeight()*2/3);
         particle p = particle(adjusted);
@@ -51,6 +61,7 @@ particleController::particleController(Shape2d shape){
         for(++j; j != mParticles.end(); ++j){
             //create springs between each particle
             spring s = spring(*i, *j);
+            s.k = springConst;
             mSprings.push_back(s);
         }
         ++i;
