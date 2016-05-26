@@ -10,36 +10,26 @@
 #include "cinder/ConvexHull.h"
 
 particleController::particleController(){
-    particle p = particle(vec2(250, 300));
-    mParticles.push_back(p);
-    p = particle(vec2(550, 300));
-    mParticles.push_back(p);
-    p = particle(vec2(700, 400));
-    mParticles.push_back(p);
-    p = particle(vec2(200, 200));
-    mParticles.push_back(p);
-    for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
-        list<particle>::iterator j = i;
-        for(++j; j != mParticles.end(); ++j){
-            //create springs between each particle
-            spring s = spring(*i, *j);
-            mSprings.push_back(s);
-        }
-        ++i;
-    }
 
 }
 
 
 particleController::particleController(Shape2d shape){
+    float springConst = 0;
+    
+    //get all paths from glyph shape and get points from their paths
+    
     isClicked = false;
     mShape = shape;
-    vector<Path2d> paths = mShape.getContours();
-    path = paths.front();
-    points = paths.front().getPoints();
+    mPaths = mShape.getContours();
+    vector<vector<vec2>>  mPoints;
+    for(Path2d &pth: mPaths){
+        mPoints.push_back(pth.getPoints());
+        springConst += pth.getPoints().size();
+    }
     
     //adjust spring constant based on number of points
-    float springConst = points.size();
+    
     if (springConst < 7){
         springConst = .06;
     }else if(springConst > 20){
@@ -48,17 +38,26 @@ particleController::particleController(Shape2d shape){
         springConst = .02;
     }
     
-    for(vector<vec2>::iterator pt = points.begin(); pt != points.end(); ++pt){
-        vec2 adjusted = *pt + vec2(getWindowWidth() * 2/3, getWindowHeight()*2/3);
-        particle p = particle(adjusted);
-        mParticles.push_back(p);
+    //create particles from the points
+    for(vector<vec2> &vecV: mPoints){
+        list<particle> parts;
+        for(vec2 &vec: vecV){
+            vec2 adjusted = vec + vec2(getWindowWidth()/2, getWindowHeight() /2);
+            particle p = particle(adjusted);
+            parts.push_back(p);
+            mParticles.push_back(p);
+        }
+        mParticleShapes.push_back(parts);
     }
     
-    curClicked = mParticles.begin();
+    
+    //create springs between each particle
+    
+    
+    
     for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end();){
         list<particle>::iterator j = i;
         for(++j; j != mParticles.end(); ++j){
-            //create springs between each particle
             spring s = spring(*i, *j);
             s.k = springConst;
             mSprings.push_back(s);
@@ -69,7 +68,14 @@ particleController::particleController(Shape2d shape){
 
 
 void particleController::draw(){
-    gl::draw(path);
+    float r = 0 ;
+    float g = 0;
+    for(Path2d &pth: mPaths){
+        gl::color(r,g,1);
+        r += .25;
+        g += .3;
+        gl::drawSolid(pth);
+    }
 }
 
 
@@ -77,29 +83,29 @@ void particleController::mouseClick(vec2 m){
     
     //if inside shape, find nearest point particle to mouse to mark as 'clicked'
     if(!isClicked){
-        PolyLine2f cur;
-       for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end(); ++i){
-            cur.push_back(i->pos);
+        //check if click is inside shape
+        //if so, find the point closest to the click and mark as closest, and isclicked as true
+        bool check = false;
+        for(Path2d &pth: mPaths){
+            if(pth.contains(m)){
+                check = true;
+            }
         }
-        if(cur.contains(m)){
-            cout << " in ";
-            list<particle>::iterator i = mParticles.begin();
-            list<particle>::iterator closest = i;
-            for(++i; i != mParticles.end(); ++i){
-                if(distance(i->pos, m) < distance(closest->pos, m)){
+        if(check){
+            list<particle>::iterator closest = mParticles.begin();
+            for(list<particle>::iterator i = closest ++; i != mParticles.end(); i++){
+                if(distance(i->pos, mousePos) < distance(closest->pos, mousePos)){
                     closest = i;
                 }
             }
             closest->followMouse = true;
-            curClicked = closest;
-            isClicked = true;
-            mLine = cur;
-        }else{
-            cout << " out " << mLine.getPosition(1);
+        isClicked = true;
         }
     }else{
         isClicked = false;
-        curClicked->followMouse = false;
+        for(list<particle>::iterator i = mParticles.begin(); i != mParticles.end(); ++i){
+            i->followMouse = false;
+        }
     }
 }
 
@@ -127,13 +133,26 @@ void particleController::update(){
         i->update();
     }
     
-    //update original glyph shape to the particle points
-    int i = 0;
-    for(particle &p: mParticles){
-        path.setPoint(i, p.pos);
-        i++;
+    //update single list of particles into vector of lists
+    
+    list<particle>::iterator singleP = mParticles.begin();
+    for(list<particle> &plis: mParticleShapes){
+        for(particle &part: plis){
+            part.pos = singleP->pos;
+            singleP ++;
+        }
     }
     
+    //update original glyph shape to the particle points
+    vector<list<particle>>::iterator pVecLis = mParticleShapes.begin();
+    for(Path2d &pth: mPaths){
+        int i = 0;
+        for(particle &part: *pVecLis){
+            pth.setPoint(i, part.pos);
+            i++;
+        }
+        pVecLis ++;
+    }
 }
 
 

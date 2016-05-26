@@ -25,14 +25,14 @@ public:
     void mouseClick(vec2 mPos);
     void mouseDrag(vec2 mPos);
     
-    vector<list<particle>>      mPartShapes;
-    list<particle>              mParticles;
-    vec2                        mousePos;
+    vector<list<particle>>      mParticleShapes;
+    list<particle>             mParticles;
+    vector<Path2d>              mPaths;
+    
     list<spring>                mSprings;
     Shape2d                     mShape;
-    PolyLine2f                  mLine;
+
     bool                        isClicked;
-    list<particle>::iterator    curClicked;
-    vector<vec2>                points;
-    Path2d                      path;
+    vec2                        mousePos;
+    particle                  * curMoving;
 };
